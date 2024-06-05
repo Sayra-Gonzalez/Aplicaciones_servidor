@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | Accesorios Mittens</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .container {
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff; 
+      color: #000; 
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #000;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button[type="submit"] {
+      background-color: #000; 
+      color: #fff; 
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #333; 
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#contacto-form').on('submit', function(e) {
+        e.preventDefault();
+        const datos = $(this).serialize();
+        
+        $.ajax({
+          url: 'guardar_contacto.php',
+          method: 'POST',
+          data: datos,
+          success: function(response) {
+            alert(response);
+            $('#contacto-form')[0].reset();
+            
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <header><br>
+<a href="index.html"><img src="imagen/l.png" alt="Mitten Logo"></a>    <nav>
+      <a href="index.html"><button>Inicio</button></a>
+      <a href="productos.php"><button>Productos</button></a>
+      <a href="contactos.html"><button>Contactos</button></a>
+      <a href="Reseñas.html"><button>Reseñas</button></a><br>
+    </nav>
+    <button class="menu-toggle">&#9776;</button>
+
+  </header>
+  <div class="container">
+    <h2>Contacto</h2>
+    <p>Ponte en contacto con nosotros para cualquier duda o comentario.</p>
+    <form id="contacto-form">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" required>
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  <footer><br>
+    <p>&copy; 2024 Accesorios Mittens</p>
+  </footer>
+  <script src="script.js"></script>
+
+</body>
+</html>

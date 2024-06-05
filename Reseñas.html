@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accesorios Mittens - Reseñas</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      function loadResenas() {
+        $.ajax({
+          url: 'obtener_resenas.php',
+          method: 'GET',
+          success: function(data) {
+            const resenas = JSON.parse(data);
+            let html = '';
+            resenas.forEach(resena => {
+              html += `
+                <tr>
+                  <td>${resena.id}</td>
+                  <td>${resena.Nombre}</td>
+                  <td>${resena.Correo}</td>
+                  <td>${resena.Mensaje}</td>
+                  <td>
+                    <input type="text" value="${resena.Nombre}" data-id="${resena.id}" class="nombre-edit">
+                    <button class="save-btn">Guardar</button>
+                  </td>
+                  <td>
+                    <button class="delete-btn" data-id="${resena.id}">Eliminar</button>
+                  </td>
+                </tr>`;
+            });
+            $("tbody").html(html);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      }
+
+      loadResenas();
+
+      $(document).on('click', '.save-btn', function() {
+        const row = $(this).closest('tr');
+        const id = row.find('.nombre-edit').data('id');
+        const nombre = row.find('.nombre-edit').val();
+        
+        $.ajax({
+          url: 'actualizar_nombre.php',
+          method: 'POST',
+          data: { id: id, nombre: nombre },
+          success: function(response) {
+            alert(response);
+            loadResenas();
+          }
+        });
+      });
+
+      $(document).on('click', '.delete-btn', function() {
+        const id = $(this).data('id');
+        
+        $.ajax({
+          url: 'eliminar_resena.php',
+          method: 'POST',
+          data: { id: id },
+          success: function(response) {
+            alert(response);
+            loadResenas();
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <header>
+<a href="index.html"><img src="imagen/l.png" alt="Mitten Logo"></a>    <nav>
+      <a href="index.html"><button>Inicio</button></a>
+      <a href="productos.php"><button>Productos</button></a>
+      <a href="contactos.html"><button>Contactos</button></a>
+      <a href="Reseñas.html"><button>Reseñas</button></a>
+    </nav><br>
+    <button class="menu-toggle">&#9776;</button>
+
+  </header>
+  <br>
+  <h1>Reseñas</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Mensaje</th>
+        <th>Editar Nombre</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <br>
+  <br>
+  <footer><br>
+    <p>&copy; 2024 Accesorios Mittens</p>
+  </footer>
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+body {
+  background-color: #f5f5f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  margin: 0;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  background-color: #000;
+  color: #fff;
+}
+
+header img {
+  max-width: 250px; 
+  height: auto; 
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 15px;
+}
+
+nav a:hover {
+  background-color: #333;
+}
+
+.menu-toggle {
+  display: none;
+  background-color: #ddb84a; 
+  border: none; 
+  color: #110202;
+  padding: 8px 15px; 
+  cursor: pointer;
+}
+
+main {
+  padding: 20px;
+  text-align: center;
+}
+
+main h2 {
+  margin-top: 0;
+}
+
+main p {
+  margin-bottom: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+table.product-table img {
+  width: 100%;
+  height: auto;
+}
+
+footer {
+  margin-top: 70px; /* Añadido margen superior */
+  background-color: #000;
+  color: #ddb84a;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  nav {
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    display: none;
+  }
+
+  nav.open {
+    display: flex;
+  }
+  
+  nav a {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  table.product-table {
+    display: block;
+  }
+
+  table.product-table td {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

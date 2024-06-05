@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accesorios Mittens</title>
+  
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .product-table td {
+      padding: 50px;
+      text-align: center;
+    }
+    .product-img {
+      width: 150px; /* Ajuste el tamaño aquí */
+      height: auto;
+      cursor: pointer; /* Para que el cursor cambie al pasar sobre la imagen */
+    }
+    .product-description {
+      display: none;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+      position: absolute;
+      z-index: 1;
+    }
+    .product-img:hover + .product-description {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="index.html"><img src="imagen/l.png" alt="Mitten Logo"></a>    <br>
+    <nav>
+      <a href="index.html"><button>Inicio</button></a>
+      <a href="productos.php"><button>Productos</button></a>
+      <a href="contactos.html"><button>Contactos</button></a>
+      <a href="Reseñas.html"><button>Reseñas</button></a>
+    </nav><br>
+    <button class="menu-toggle">&#9776;</button>
+  </header>
+  <br>
+  <form action="/search" method="get">
+    <input type="text" name="q" placeholder="Buscar">
+    <input type="submit" value="Buscar">
+  </form>
+  <main>
+    <h2>Nuestros productos</h2>
+    <table class="product-table">
+      <tr>
+        <?php
+          include 'obtener_productos.php';
+          $count = 0;
+          if (!empty($productos)) {
+            foreach ($productos as $producto) {
+              if ($count % 3 == 0 && $count != 0) {
+                echo "</tr><tr>";
+              }
+              $imagen_principal = "imagen/productos/{$producto['id']}/p{$producto['id']}.jpg";
+              $descripcion = $producto['Descripcion']; // Suponiendo que hay un campo Descripcion en tu base de datos
+              echo "<td>";
+              echo "<img src='{$imagen_principal}' alt='Producto {$producto['id']}' class='product-img'>";
+              echo "<div class='product-description'>{$descripcion}</div>";
+              echo "<h4>{$producto['Nombre']}</h4>";
+              echo "<h4>$ {$producto['Precio']}</h4>";
+              if (!empty($producto['imagenes_adicionales'])) {
+                $imagenes_adicionales = explode(',', $producto['imagenes_adicionales']);
+                foreach ($imagenes_adicionales as $imagen) {
+                  $imagen_url = "imagen/productos/{$producto['id']}/{$imagen}.jpg";
+                  echo "<img src='{$imagen_url}' alt='Producto {$producto['id']}' class='product-img'>";
+                }
+              }
+              echo "</td>";
+              $count++;
+            }
+          } else {
+            echo "<p>No hay productos disponibles.</p>";
+          }
+        ?>
+      </tr>
+    </table>
+    <br>
+    <br>
+  </main>
+  <footer><br>
+    <p>&copy; 2024 Accesorios Mittens</p>
+  </footer>
+</body>
+</html>
